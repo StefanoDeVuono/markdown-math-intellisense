@@ -1,0 +1,55 @@
+{
+  "name": "math-intellisense-markdown",
+  "displayName": "MathIntellisenseMarkdown",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "extensionDependencies": [
+    "James-Yu.LaTeX-Workshop",
+    "vscode.markdown-math"
+  ],
+  "devDependencies": {
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/tmp": "^0.2.6",
+    "@types/vscode": "^1.91.0",
+    "@typescript-eslint/eslint-plugin": "^7.14.1",
+    "@typescript-eslint/parser": "^7.11.0",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.4.0",
+    "esbuild": "^0.23.0",
+    "eslint": "^8.57.0",
+    "latex-workshop": "github:James-Yu/LaTeX-Workshop",
+    "npm-run-all": "^4.1.5",
+    "tmp": "^0.2.3",
+    "typescript": "^5.4.5",
+    "vscode-languageclient": "^9.0.1"
+  },
+  "dependencies": {
+    "remark": "^15.0.1",
+    "remark-math": "^6.0.0"
+  }
+}
