@@ -1,6 +1,5 @@
 import { Position, TextDocument, Uri } from 'vscode'
 import { Node, getLanguageId, getLanguageSuffix, rangeOfNode } from './astUtil.js'
-import path from 'path'
 
 export const scheme = 'markdown-embed-content'
 
@@ -23,7 +22,7 @@ export class VirtualDocument extends Map<string, string> {
     }
     const originalUri = document.uri.toString(true);
     this.set(originalUri, document.getText(range))
-    const vdocUriString = `embedded-content://${suffix}/${encodeURIComponent(originalUri)}.${suffix}`
+    const vdocUriString = `embedded-content://${suffix}/${encodeURIComponent(originalUri )}.${suffix}`
     this.uri = Uri.parse(vdocUriString)
     this.position = new Position(position.line - range.start.line, position.character)
   }
