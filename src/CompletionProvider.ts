@@ -20,19 +20,18 @@ export class MarkdownCompletionItem implements CompletionItemProvider {
 
     let itemList
 
-
-    // START - Using temporary document
+    /**  START - Using Temporary Document */
     // const virtualDocument = await createTempDocument(document, node)
     // const virtualPosition = createTempPosition(position, node)
     // const vdocUri = virtualDocument?.uri
-    // END -  Using temporary document
+    /** END -  Using Temporary Document */
 
-    // START - Using virtual document
+    /** START - Using Virtual Document */
     this.virtualDocument.update!(document, node, position)
     
     const vdocUri = this.virtualDocument.uri
     const virtualPosition = this.virtualDocument.position
-    // END - Using virtual document
+    /** END - Using Virtual Document */
 
     if (!vdocUri || !virtualPosition) {
       return
