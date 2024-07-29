@@ -28,8 +28,7 @@
     "test": "vscode-test"
   },
   "extensionDependencies": [
-    "James-Yu.LaTeX-Workshop",
-    "vscode.markdown-math"
+    "James-Yu.LaTeX-Workshop"
   ],
   "devDependencies": {
     "@types/mocha": "^10.0.7",

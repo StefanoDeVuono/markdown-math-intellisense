@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
     provideTextDocumentContent: uri => {
       // Remove leading `/` and ending `.tex` to get original URI
       const originalUri = uri.path.slice(1, -4);
-      const decodedUri = decodeURIComponent(originalUri);
+      let decodedUri = decodeURIComponent(originalUri);
       return virtualDocument.get(decodedUri);
     }
   });

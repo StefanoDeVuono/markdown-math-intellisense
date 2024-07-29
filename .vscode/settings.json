@@ -12,4 +12,9 @@
 	"debug.javascript.terminalOptions": {
 	
 	},
+	"markdown.trace.server": "verbose",
+	"markdown.trace.extension": "verbose",
+	"markdown.server.log": "trace",
+	"latex-workshop.message.log.show": true,
+	"latex-workshop.intellisense.update.aggressive.enabled": true
 }
