@@ -22,9 +22,10 @@ export class VirtualDocument extends Map<string, string> {
     }
     const originalUri = document.uri.toString(true);
     this.set(originalUri, document.getText(range))
-    const vdocUriString = `embedded-content://${suffix}/${encodeURIComponent(originalUri )}.${suffix}`
+    const vdocUriString = `embedded-content://latex/${encodeURIComponent(originalUri )}.latex`
     this.uri = Uri.parse(vdocUriString)
     this.position = new Position(position.line - range.start.line, position.character)
+    // this.position = position
   }
 }
 

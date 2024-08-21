@@ -7,7 +7,21 @@ export function activate(context: vscode.ExtensionContext) {
   const completionTrigger = ["\\", ".", ":", atSuggestionLatexTrigger]
 
   const virtualDocument = new VirtualDocument();
+  const latexWorkshop = vscode.extensions.getExtension('James-Yu.latex-workshop') as vscode.Extension<any> |any;
+  
+  (async ()=>{
+    const commands = await vscode.commands.getCommands()
+    console.log('commands', commands)
+  //   const ext = await latexWorkshop.#e.getExtension()
+  })()
 
+  // look into workspace.textDocuments
+  // vscode.languages.setLanguageConfiguration
+  // vscode.languages.setTextDocumentLanguage
+
+  
+  // latexWorkshop.extensionPath
+  // latexWorkshop.#e.R.get
   vscode.workspace.registerTextDocumentContentProvider('embedded-content', {
     provideTextDocumentContent: uri => {
       // Remove leading `/` and ending `.tex` to get original URI
@@ -20,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
   // COMPLETIONS
   context.subscriptions.push(
     vscode.languages.registerCompletionItemProvider(
-      { scheme: 'file', language: 'markdown' },
+      { language: 'markdown' },
       new MarkdownCompletionItem(virtualDocument),
       ...completionTrigger
     )

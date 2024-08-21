@@ -1,9 +1,17 @@
 import * as vscode from 'vscode'
+import {
+  createConnection,
+  InitializeParams,
+  ProposedFeatures,
+  TextDocuments,
+  TextDocumentSyncKind,
+} from 'vscode-languageserver/node'
 
 import { CompletionContext, CompletionList, CompletionItemProvider, Position, TextDocument, commands, Uri } from 'vscode'
 import { findNode } from './astUtil.js'
 import { VirtualDocument } from './virtualDocument.js'
 import { createTempDocument, createTempPosition } from './tmpDocument.js'
+import { TextDocument as Text } from 'vscode-languageserver-textdocument'
 
 
 export class MarkdownCompletionItem implements CompletionItemProvider {
@@ -25,16 +33,19 @@ export class MarkdownCompletionItem implements CompletionItemProvider {
     let itemList
 
     /**  START - Using Temporary Document */
-    const virtualDocument = await createTempDocument(document, node) // languageId = 'latex'
-    const virtualPosition = createTempPosition(position, node)
-    const vdocUri = virtualDocument?.uri
+    // const virtualDocument = await createTempDocument(document, node) // languageId = 'latex'
+    // const virtualPosition = createTempPosition(position, node)
+    // const vdocUri = virtualDocument?.uri
     /** END -  Using Temporary Document */
 
     /** START - Using Virtual Document */
-    // this.virtualDocument.update!(document, node, position)
+
+    this.virtualDocument.update!(document, node, position)
     
-    // const vdocUri = this.virtualDocument.uri
-    // const virtualPosition = this.virtualDocument.position
+    const vdocUri = this.virtualDocument.uri
+    const virtualPosition = this.virtualDocument.position
+    const content = this.virtualDocument.get(document.uri.toString()) || ''
+    const text = Text.create(vdocUri!.toString(), 'latex', 1, content)
     /** END - Using Virtual Document */
 
     const languages = await vscode.languages.getLanguages()
