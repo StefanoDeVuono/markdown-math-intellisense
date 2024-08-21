@@ -12,6 +12,22 @@
   "activationEvents": [
     "onLanguage:markdown"
   ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "markdown",
+        "extensions": [
+          ".md"
+        ]
+      },
+      {
+        "id": "latex",
+        "extensions": [
+          ".md"
+        ]
+      }
+    ]
+  },
   "main": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run package",
@@ -31,6 +47,7 @@
     "James-Yu.LaTeX-Workshop"
   ],
   "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
     "@types/mocha": "^10.0.7",
     "@types/node": "20.x",
     "@types/tmp": "^0.2.6",
@@ -47,9 +64,12 @@
     "typescript": "^5.4.5",
     "vscode-languageclient": "^9.0.1",
     "vscode-languageserver": "^9.0.1",
-    "vscode-languageserver-textdocument": "^1.0.12"
+    "vscode-languageserver-textdocument": "^1.0.12",
+    "vscode-markdown-languageservice": "^0.5.0-alpha.7"
   },
   "dependencies": {
+    "D": "^1.0.0",
+    "markdown-it": "^14.1.0",
     "remark": "^15.0.1",
     "remark-math": "^6.0.0"
   }
