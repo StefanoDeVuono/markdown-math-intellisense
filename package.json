@@ -67,6 +67,13 @@
     "vscode-languageserver-textdocument": "^1.0.12",
     "vscode-markdown-languageservice": "^0.5.0-alpha.7"
   },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "none",
+    "singleAttributePerLine": false,
+    "printWidth": 120
+  },
   "dependencies": {
     "D": "^1.0.0",
     "markdown-it": "^14.1.0",

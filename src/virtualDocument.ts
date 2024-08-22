@@ -7,25 +7,20 @@ export class VirtualDocument extends Map<string, string> {
   uri: Uri | undefined
   position: Position | undefined
 
-  update(document: TextDocument, node: Node, position: Position) {
+  updateMathContent(document: TextDocument, node: Node, position: Position) {
     const range = rangeOfNode(node)
-    if (!range.contains(position)) {
-      return
-  }
+    if (!range.contains(position)) return
+
     const languageId = getLanguageId(node)
-    if (!languageId) {
-        return
-    }
+    if (languageId !== 'latex') return
+
     const suffix = getLanguageSuffix(languageId)
-    if (!suffix) {
-      return
-    }
-    const originalUri = document.uri.toString(true);
+    if (!suffix) return
+
+    const originalUri = document.uri.toString(true)
     this.set(originalUri, document.getText(range))
-    const vdocUriString = `embedded-content://latex/${encodeURIComponent(originalUri )}.latex`
+    const vdocUriString = `embedded-content://${suffix}/${encodeURIComponent(originalUri)}.${suffix}`
     this.uri = Uri.parse(vdocUriString)
     this.position = new Position(position.line - range.start.line, position.character)
-    // this.position = position
   }
 }
-

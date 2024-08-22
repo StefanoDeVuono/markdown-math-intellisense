@@ -16,5 +16,11 @@
 	"markdown.trace.extension": "verbose",
 	"markdown.server.log": "trace",
 	"latex-workshop.message.log.show": true,
-	"latex-workshop.intellisense.update.aggressive.enabled": true
+	"latex-workshop.intellisense.update.aggressive.enabled": true,
+	"eslint.format.enable": true,
+	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
+	"editor.formatOnSave": true,
+	"[typescript]": {
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	}
 }
