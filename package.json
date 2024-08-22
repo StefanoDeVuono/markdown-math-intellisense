@@ -3,7 +3,12 @@
   "displayName": "Markdown Math Intellisense",
   "description": "An extension for Visual Studio Code that provides intellisense for math in markdown files.",
   "publisher": "StefanoDeVuono",
-  "version": "0.0.1",
+  "licence": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StefanoDeVuono/markdown-math-intellisense"
+  },
+  "version": "1.0.0-alpha",
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -16,15 +21,9 @@
   "contributes": {
     "languages": [
       {
-        "id": "markdown",
-        "extensions": [
-          ".md"
-        ]
-      },
-      {
         "id": "latex",
         "extensions": [
-          ".md"
+          ".md", "mdx"
         ]
       }
     ]
