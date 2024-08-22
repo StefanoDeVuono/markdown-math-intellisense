@@ -1,71 +1,43 @@
-# helloworld README
+# VSCode Markdown Math Intellisense Extension
 
-This is the README for your extension "helloworld". After writing up a brief description, we recommend including the following sections.
+## Overview
+
+This VSCode extension provides specialized support for working with LaTeX embedded in markdown files. It offers intelligent autocompletion and handles virtual documents to enhance your editing experience.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+1. **Intelligent Autocompletion**:
+   - James-Yu's LaTeX-Workshop provides robust autocompletion feature that triggers suggestions within math blocks based on specific characters. By defaul, these include `\\`, `.`, `:`, and a user-defined LaTeX trigger. This is particularly useful for users working with LaTeX while in markdown speeding up note taking for mathy subjects.
 
-For example if there is an image subfolder under your extension project workspace:
+## Usage
 
-\!\[feature X\]\(images/feature-x.png\)
+1. **Activating the Extension**:
+   - The extension activates automatically when VSCode starts, registering the necessary providers to manage virtual documents and autocompletion.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+2. **Customizing Autocompletion**:
+   - Users can configure the LaTeX autocompletion trigger through the `latex-workshop` settings in VSCode. This allows for a customized experience tailored to your specific needs.
+
+## Configuration
+
+- **LaTeX Autocompletion Trigger**:
+  - The trigger for LaTeX autocompletion can be customized in the VSCode settings under `latex-workshop`. This allows you to define which characters should trigger suggestions.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- This extension requires [James-Yu's LaTeX-Workshop extension](https://github.com/James-Yu/LaTeX-Workshop/blob/master/package.json).
 
-## Extension Settings
+## Installation
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+To install the extension, download it from the [VSCode marketplace](https://marketplace.visualstudio.com/). The extension will activate automatically, providing the features described above.
 
-For example:
+## Contribution
 
-This extension contributes the following settings:
+Feel free to contribute to the development of this extension. Fork the repository, make your changes, and submit a pull request. To set up the development environment:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+1. Clone the repository.
+2. Run `npm install` to install dependencies.
+3. Open the project in VSCode and start debugging.
 
-## Known Issues
+## License
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+This project is licensed under the MIT Licence.
