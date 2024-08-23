@@ -16,18 +16,18 @@ export class MarkdownCompletionItem implements CompletionItemProvider {
     let itemList
 
     this.virtualDocument.updateMathContent!(document, node, position)
-    const vdocUri = this.virtualDocument.uri
+    const virtualDocumentUri = this.virtualDocument.uri
     const virtualPosition = this.virtualDocument.position
 
-    if (!vdocUri || !virtualPosition) return
+    if (!virtualDocumentUri || !virtualPosition) return
 
     try {
       itemList = await commands.executeCommand<CompletionList>(
         'vscode.executeCompletionItemProvider',
-        vdocUri,
+        virtualDocumentUri,
         virtualPosition,
-        context.triggerCharacter,
-        10
+        // position,
+        context.triggerCharacter
       )
     } catch (error) {
       console.error(error)

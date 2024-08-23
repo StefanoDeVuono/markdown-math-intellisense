@@ -21,10 +21,7 @@
   "contributes": {
     "languages": [
       {
-        "id": "latex",
-        "extensions": [
-          ".md", "mdx"
-        ]
+        "id": "latex"
       }
     ]
   },
