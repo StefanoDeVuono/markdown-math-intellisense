@@ -1,49 +1,26 @@
-import { commands, CompletionContext, CompletionItemProvider, CompletionList, Position, TextDocument } from 'vscode'
+import { commands, CompletionContext, CompletionItemProvider, CompletionList, extensions, Position, Uri, TextDocument as VSCodeTextDocument} from 'vscode'
 import { parseDocumentForLatex } from './astUtil.js'
 import { VirtualDocument } from './virtualDocument.js'
+import path from 'path'
+import { TextDocument } from 'vscode-languageserver-textdocument'
 
 export class MarkdownCompletionItem implements CompletionItemProvider {
-  virtualDocument: VirtualDocument
+  completion: any
 
-  constructor(virtualDocument: VirtualDocument) {
-    this.virtualDocument = virtualDocument
+  constructor(completion: any) {
+    this.completion = completion
   }
 
-
-  async provideCompletionItems(document: TextDocument, position: Position, _: any, context: CompletionContext) {
+  async provideCompletionItems(document: VSCodeTextDocument, position: Position, _: any, context: CompletionContext) {
     const range = parseDocumentForLatex(document, position)
     
     if (!range || !range.contains(position)) return
 
-    const originalUri = document.uri.toString(true)
-    let content = document.getText(range)
+    const provider = context.triggerCharacter === '@' ? this.completion.atProvider : this.completion.provider
+    const itemList = provider.provideCompletionItems(document,position)
 
-    let itemList
+    if (!itemList) return
 
-    this.virtualDocument.set(originalUri, content)
-    const virtualDocumentUri = this.virtualDocument.uri
-    const virtualPosition = new Position(position.line - range.start.line, position.character)
-
-    if (!virtualDocumentUri || !virtualPosition) return
-
-    try {
-      itemList = await commands.executeCommand<CompletionList>(
-        'vscode.executeCompletionItemProvider',
-        virtualDocumentUri,
-        virtualPosition,
-        context.triggerCharacter
-      )
-    } catch (error) {
-      console.error(error)
-    }
-
-    if (!itemList) {
-      return
-    }
-    for (const item of itemList.items) {
-      item.range = undefined
-      item.insertText = undefined
-    }
     return itemList
   }
 }
