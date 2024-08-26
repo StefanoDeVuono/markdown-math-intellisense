@@ -1,5 +1,5 @@
 import { commands, CompletionContext, CompletionItemProvider, CompletionList, Position, TextDocument } from 'vscode'
-import { findNode } from './astUtil.js'
+import { parseDocumentForLatex } from './astUtil.js'
 import { VirtualDocument } from './virtualDocument.js'
 
 export class MarkdownCompletionItem implements CompletionItemProvider {
@@ -9,15 +9,20 @@ export class MarkdownCompletionItem implements CompletionItemProvider {
     this.virtualDocument = virtualDocument
   }
 
+
   async provideCompletionItems(document: TextDocument, position: Position, _: any, context: CompletionContext) {
-    const node = findNode(document.getText(), position)
-    if (!node) return
+    const range = parseDocumentForLatex(document, position)
+    
+    if (!range || !range.contains(position)) return
+
+    const originalUri = document.uri.toString(true)
+    let content = document.getText(range)
 
     let itemList
 
-    this.virtualDocument.updateMathContent!(document, node, position)
+    this.virtualDocument.set(originalUri, content)
     const virtualDocumentUri = this.virtualDocument.uri
-    const virtualPosition = this.virtualDocument.position
+    const virtualPosition = new Position(position.line - range.start.line, position.character)
 
     if (!virtualDocumentUri || !virtualPosition) return
 
@@ -26,7 +31,6 @@ export class MarkdownCompletionItem implements CompletionItemProvider {
         'vscode.executeCompletionItemProvider',
         virtualDocumentUri,
         virtualPosition,
-        // position,
         context.triggerCharacter
       )
     } catch (error) {

@@ -27,7 +27,20 @@ export type Node = {
   }
 }
 
-export function rangeOfNode(node: Node): vscode.Range {
+export function parseDocumentForLatex(document: vscode.TextDocument, position: vscode.Position) {
+  const content = document.getText()
+
+  const node = findNode(content, position)
+  if (!node) return
+
+  const languageId = getLanguageId(node)
+  if (languageId !== 'latex') return
+
+  return rangeOfNode(node)
+
+}
+
+function rangeOfNode(node: Node): vscode.Range {
   if (remark && math) {
     const { start, end } = node.position
     if (node.type === 'code') {
@@ -45,7 +58,7 @@ function isNodeIncludingPosition(node: Node, position: vscode.Position) {
   return range.contains(position)
 }
 
-export function findNode(text: string, position: vscode.Position) {
+function findNode(text: string, position: vscode.Position) {
   const ast: Node = processor.parse(text) as Node
   const nodeArrayStack: Node[][] = []
   if (ast.children) {
@@ -68,27 +81,12 @@ export function findNode(text: string, position: vscode.Position) {
       }
     }
   }
-  return undefined
+  return ast
 }
 
-export function getLanguageId(node: Node) {
-  if (node.type === 'html') {
-    return 'html'
-  }
-  if (node.type === 'inlineMath' || node.type === 'math') {
-    return 'latex'
-  }
-  if (node.type === 'code') {
-    return node.lang
-  }
+function getLanguageId(node: Node) {
+  if (node.type === 'html')  return 'html'
+  if (node.type === 'inlineMath' || node.type === 'math')  return 'latex'
+  if (node.type === 'code') return node.lang
   return
-}
-
-export function getLanguageSuffix(lang: string) {
-  const configuration = vscode.workspace.getConfiguration('vscode-markdown-intellisense')
-  const extensionObj = configuration.get('languageFilenameExtensionList') as {
-    [key: string]: string
-  }
-
-  if (lang === 'latex') return 'tex'
 }

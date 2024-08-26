@@ -18,13 +18,7 @@
   "activationEvents": [
     "onLanguage:markdown"
   ],
-  "contributes": {
-    "languages": [
-      {
-        "id": "latex"
-      }
-    ]
-  },
+  
   "main": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run package",
