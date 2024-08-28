@@ -19,4 +19,3 @@ export class VirtualDocument extends Map<string, string> {
     return this.#uri
   }
 }
-
