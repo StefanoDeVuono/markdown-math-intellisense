@@ -1,6 +1,6 @@
-import * as vscode from 'vscode'
-import { MarkdownCompletionItem } from './CompletionProvider.js'
 import path from 'path'
+import * as vscode from 'vscode'
+import { MarkdownMathCompletionItemProvider } from './MarkdownMathCompletionItemProvider.js'
 
 export function activate(context: vscode.ExtensionContext) {
   const atSuggestionLatexTrigger = vscode.workspace.getConfiguration('latex-workshop').get('intellisense.atSuggestion.trigger.latex') as string
@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
     const completion = lw.completion
 
     vscode.languages.registerCompletionItemProvider('markdown',
-      new MarkdownCompletionItem(completion),
+      new MarkdownMathCompletionItemProvider(completion),
       ...completionTrigger
     )
   })

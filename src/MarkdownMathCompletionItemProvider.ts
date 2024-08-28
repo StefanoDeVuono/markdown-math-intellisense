@@ -1,10 +1,7 @@
-import { commands, CompletionContext, CompletionItemProvider, CompletionList, extensions, Position, Uri, TextDocument as VSCodeTextDocument} from 'vscode'
+import { CompletionContext, CompletionItemProvider, Position, TextDocument as VSCodeTextDocument } from 'vscode'
 import { parseDocumentForLatex } from './astUtil.js'
-import { VirtualDocument } from './virtualDocument.js'
-import path from 'path'
-import { TextDocument } from 'vscode-languageserver-textdocument'
 
-export class MarkdownCompletionItem implements CompletionItemProvider {
+export class MarkdownMathCompletionItemProvider implements CompletionItemProvider {
   completion: any
 
   constructor(completion: any) {
