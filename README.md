@@ -7,7 +7,7 @@ This VSCode extension provides specialized support for working with LaTeX embedd
 ## Features
 
 1. **Intelligent Autocompletion**:
-   - James-Yu's LaTeX-Workshop provides robust autocompletion feature that triggers suggestions within math blocks based on specific characters. By defaul, these include `\\`, `.`, `:`, and a user-defined LaTeX trigger. This is particularly useful for users working with LaTeX while in markdown speeding up note taking for mathy subjects.
+   - James-Yu's LaTeX-Workshop provides robust autocompletion feature that triggers suggestions within math blocks based on specific characters. By default, these include `\\`, `.`, `:`, and a user-defined LaTeX trigger. This is particularly useful for users working with LaTeX while in markdown speeding up note taking for math and math-related subjects.
 
 ## Usage
 

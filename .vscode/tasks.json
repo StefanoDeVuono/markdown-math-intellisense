@@ -5,19 +5,12 @@
   "tasks": [
     {
       "type": "npm",
-      "command": "devbox shell",
       "script": "watch",
       "problemMatcher": "$tsc-watch",
       "isBackground": true,
       "presentation": {
         "reveal": "never"
       },
-      // "options": {
-      //   "shell": {
-      //     "executable": "/usr/local/bin/devbox",
-      //     "args": ["shell"]
-      //   }
-      // },
       "group": {
         "kind": "build",
         "isDefault": true
