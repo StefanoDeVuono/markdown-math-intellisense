@@ -1,5 +1,5 @@
-import { CancellationToken, CompletionContext, CompletionItemProvider, CompletionList, Position, TextDocument, TextDocument as VSCodeTextDocument } from 'vscode'
-import { parseDocumentForLatex } from './astUtil.js'
+import { CancellationToken, commands, CompletionContext, CompletionItemProvider, CompletionList, Position, TextDocument } from 'vscode'
+import { parseDocumentForLatex } from './util.js'
 
 type LatexCompletionProvider = {
   provideCompletionItems(document: TextDocument, position: Position): CompletionList;
@@ -17,10 +17,13 @@ export class MarkdownMathCompletionItemProvider implements CompletionItemProvide
     this.completion = completion
   }
 
-  async provideCompletionItems(document: VSCodeTextDocument, position: Position, _: CancellationToken, context: CompletionContext) {
+  async provideCompletionItems(document: TextDocument, position: Position, _: CancellationToken, context: CompletionContext) {
     const range = parseDocumentForLatex(document, position)
 
-    if (!range || !range.contains(position)) return
+    if (!range || !range.contains(position)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return commands.executeCommand('vscode.executeCompletionItemProvider', document.uri, position, context.triggerCharacter) as Promise<CompletionList>
+    }
 
     const provider = context.triggerCharacter === '@' ? this.completion.atProvider : this.completion.provider
     const itemList = provider.provideCompletionItems(document, position)
