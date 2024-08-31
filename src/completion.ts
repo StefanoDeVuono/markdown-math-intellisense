@@ -1,35 +1,33 @@
-import { CancellationToken, commands, CompletionContext, CompletionItemProvider, CompletionList, Position, TextDocument } from 'vscode'
+import { CancellationToken, CompletionContext, CompletionItem, commands, CompletionItemProvider, Position, ProviderResult, TextDocument, CompletionList } from 'vscode'
 import { parseDocumentForLatex } from './util.js'
 
-type LatexCompletionProvider = {
-  provideCompletionItems(document: TextDocument, position: Position): CompletionList;
-}
-
 type Completion = {
-  provider: LatexCompletionProvider,
-  atProvider: LatexCompletionProvider,
+  provider: CompletionItemProvider,
+  atProvider: CompletionItemProvider,
 }
 
 export class MarkdownMathCompletionItemProvider implements CompletionItemProvider {
   completion: Completion
+  provider: CompletionItemProvider | undefined
 
   constructor(completion: Completion) {
     this.completion = completion
   }
 
-  async provideCompletionItems(document: TextDocument, position: Position, _: CancellationToken, context: CompletionContext) {
+  async provideCompletionItems(document: TextDocument, position: Position, token: CancellationToken, context: CompletionContext) {
     const range = parseDocumentForLatex(document, position)
 
-    if (!range || !range.contains(position)) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return commands.executeCommand('vscode.executeCompletionItemProvider', document.uri, position, context.triggerCharacter) as Promise<CompletionList>
-    }
+    if (!range || !range.contains(position)) return
 
-    const provider = context.triggerCharacter === '@' ? this.completion.atProvider : this.completion.provider
-    const itemList = provider.provideCompletionItems(document, position)
+    this.provider = context.triggerCharacter === '@' ? this.completion.atProvider : this.completion.provider
+    const itemList = this.provider.provideCompletionItems(document, position, token, context)
 
     if (!itemList) return
 
     return itemList
+  }
+  resolveCompletionItem(item: CompletionItem, token: CancellationToken): ProviderResult<CompletionItem> {
+    if (!this.provider) return item
+    return this.provider!.resolveCompletionItem!(item, token)
   }
 }

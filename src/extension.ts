@@ -2,6 +2,7 @@ import path from 'path'
 import * as vscode from 'vscode'
 import { MarkdownMathCompletionItemProvider } from './completion.js'
 
+let registeredCompletionItemProvider: vscode.Disposable | undefined
 export function activate(_context: vscode.ExtensionContext) {
   const atSuggestionLatexTrigger = vscode.workspace.getConfiguration('latex-workshop').get('intellisense.atSuggestion.trigger.latex') as string
 
@@ -15,11 +16,14 @@ export function activate(_context: vscode.ExtensionContext) {
   const { lw } = require(LatexWorkshopFullPath)
   const completion = lw.completion
 
-  vscode.languages.registerCompletionItemProvider('markdown',
+  registeredCompletionItemProvider = vscode.languages.registerCompletionItemProvider('markdown',
     new MarkdownMathCompletionItemProvider(completion),
     ...completionTrigger,
   )
+
 }
 
 // This method is called when extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+  registeredCompletionItemProvider?.dispose()
+}
