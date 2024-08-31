@@ -1,4 +1,4 @@
-import { CancellationToken, CompletionContext, CompletionItem, commands, CompletionItemProvider, Position, ProviderResult, TextDocument, CompletionList } from 'vscode'
+import { CancellationToken, CompletionContext, CompletionItem, CompletionItemProvider, Position, ProviderResult, TextDocument } from 'vscode'
 import { parseDocumentForLatex } from './util.js'
 
 type Completion = {
