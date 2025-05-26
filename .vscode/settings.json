@@ -17,12 +17,11 @@
 		"typescript",
 		"javascript"
 	],
-	"editor.defaultFormatter": "dbaeumer.vscode-eslint",
 	"[typescript]": {
 		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
 	},
 	"[javascript]": {
-		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+		"editor.defaultFormatter": "vscode.typescript-language-features"
 	},
 	"editor.formatOnSave": true,
 	"eslint.debug": true,

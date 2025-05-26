@@ -1,0 +1,9 @@
+{
+  "Insert Dollar Signs": {
+    "prefix": "$",
+    "body": [
+      "${1}$"
+    ],
+    "description": "Insert a pair of dollar signs with cursor in between"
+  }
+}

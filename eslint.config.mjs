@@ -18,6 +18,6 @@ export default tseslint.config({
     '@stylistic/ts/comma-spacing': ['error', { before: false, after: true }],
     '@/no-trailing-spaces': 'error',
     '@/no-multiple-empty-lines': ['error', { 'max': 1, 'maxEOF': 0 }],
-    '@typescript-eslint/no-unused-vars': ['error', { vars: 'all', argsIgnorePattern: '^_',  args: 'after-used', ignoreRestSiblings: true }],
+    '@typescript-eslint/no-unused-vars': ['error', { vars: 'all', argsIgnorePattern: '^_', args: 'after-used', ignoreRestSiblings: true }],
   },
 })

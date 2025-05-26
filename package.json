@@ -18,6 +18,14 @@
   "activationEvents": [
     "onLanguage:markdown"
   ],
+  "contributes": {
+    "snippets": [
+      {
+        "language": "markdown",
+        "path": "./snippets/snippets.json"
+      }
+    ]
+  },
   "main": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "npm run package",
