@@ -4,6 +4,23 @@ import { remark } from 'remark'
 import math from 'remark-math'
 
 const processor  = remark().use(math)
+const LEAF_TYPES = new Set(['text', 'code', 'html', 'inlineMath', 'math'])
+
+
+let cachedAst: Node | undefined
+let cachedUri: string | undefined
+let cachedVersion: number | undefined
+
+function getParsedAst(document: vscode.TextDocument): Node {
+  if (cachedUri === document.uri.toString() && cachedVersion === document.version && cachedAst) {
+    return cachedAst
+  }
+  cachedAst = processor.parse(document.getText()) as Node
+  cachedUri = document.uri.toString()
+  cachedVersion = document.version
+  return cachedAst
+}
+
 
 export type Node = {
   type: string
@@ -19,16 +36,21 @@ export type Node = {
 }
 
 export function parseDocumentForLatex(document: vscode.TextDocument, position: vscode.Position) {
-  const content = document.getText()
 
-  const node = findNode(content, position)
+  const node = findNode(document, position)
   if (!node) return
 
   const languageId = getLanguageId(node)
-  if (languageId !== 'latex') return
+  if (languageId === 'latex') return rangeOfNode(node)
 
-  return rangeOfNode(node)
-
+  // Fallback: check for unclosed inline math delimiter
+  const lineText = document.lineAt(position.line).text
+  const textBeforeCursor = lineText.substring(0, position.character)
+  const dollars = textBeforeCursor.match(/(?<!\\)\$/g)
+  if (dollars && dollars.length % 2 === 1) {
+    const dollarIndex = textBeforeCursor.lastIndexOf('$')
+    return new vscode.Range(position.line, dollarIndex, position.line, position.character)
+  }
 }
 
 function rangeOfNode(node: Node): vscode.Range {
@@ -40,12 +62,19 @@ function rangeOfNode(node: Node): vscode.Range {
 }
 
 function isNodeIncludingPosition(node: Node, position: vscode.Position) {
-  const range = rangeOfNode(node)
-  return range.contains(position)
+  const { start, end } = node.position
+  const line = position.line + 1
+  const column = position.character + 1
+
+  if (line < start.line || line > end.line) return false
+  if (line === start.line && column < start.column) return false
+  if (line === end.line && column > end.column) return false
+  return true
 }
 
-function findNode(text: string, position: vscode.Position) {
-  const ast: Node = processor.parse(text) as Node
+function findNode(document: vscode.TextDocument, position: vscode.Position) {
+  const ast = getParsedAst(document)
+
   const nodeArrayStack: Node[][] = []
   if (ast.children) {
     nodeArrayStack.push(ast.children)
@@ -57,7 +86,7 @@ function findNode(text: string, position: vscode.Position) {
       break
     }
     for (const node of children) {
-      if (node.type.match(/text|code|html|inlineMath|math/)) {
+      if (LEAF_TYPES.has(node.type)) {
         if (isNodeIncludingPosition(node, position)) {
           return node
         }
@@ -68,7 +97,7 @@ function findNode(text: string, position: vscode.Position) {
       }
     }
   }
-  return ast
+  return undefined
 }
 
 function getLanguageId(node: Node) {

@@ -1,8 +1,9 @@
 {
   "Insert Dollar Signs": {
-    "prefix": "$",
+    "prefix": "\\$",
+    "scopeName": "text.html.markdown",
     "body": [
-      "${1}$"
+      "\\$${1}\\$"
     ],
     "description": "Insert a pair of dollar signs with cursor in between"
   }
