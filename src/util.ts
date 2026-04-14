@@ -6,7 +6,6 @@ import math from 'remark-math'
 const processor  = remark().use(math)
 const LEAF_TYPES = new Set(['text', 'code', 'html', 'inlineMath', 'math'])
 
-
 let cachedAst: Node | undefined
 let cachedUri: string | undefined
 let cachedVersion: number | undefined
@@ -20,7 +19,6 @@ function getParsedAst(document: vscode.TextDocument): Node {
   cachedVersion = document.version
   return cachedAst
 }
-
 
 export type Node = {
   type: string
@@ -79,7 +77,6 @@ function findNode(document: vscode.TextDocument, position: vscode.Position) {
   if (ast.children) {
     nodeArrayStack.push(ast.children)
   }
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     const children = nodeArrayStack.pop()
     if (children === undefined) {
